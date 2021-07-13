@@ -1,0 +1,8 @@
+version: '3'
+services:
+  baonq_telebot:
+    image: ghcr.io/baonq243/cowbot:latest
+  environment:
+    - LIST_ADMIN
+    - LIST_ALLOW
+    - TOKEN

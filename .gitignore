@@ -1,0 +1,4 @@
+*.log
+Pipfile
+.idea
+.env
