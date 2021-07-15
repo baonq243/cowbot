@@ -42,7 +42,7 @@ def start(update, context):
 
 
 def help(update, context):
-    update.message.reply_markdown("```\nTroubleshoot from core network\n"
+    update.message.reply_markdown("```\nMy CowBot\n"
                                   "/ping <ip> or <domain>\n"
                                   "/dns <domain>\n"
                                   "/scanport <ip>\n"

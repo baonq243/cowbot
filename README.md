@@ -1,7 +1,18 @@
 # BaoNQ
 
-## 
-- 
+## Feature
+
+```text
+/ping <ip> or <domain>
+/dns <domain>
+/scanport <ip>
+/checkport <ip> <port>
+/tracert <ip> or <domain>
+/mtr <ip> or <domain>
+/getid
+/checkwan <domain> <ipwan>
+/command command
+```
 
 Tạo secrets:
 
