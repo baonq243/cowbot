@@ -237,9 +237,11 @@ if __name__ == '__main__':
     handler = RotatingFileHandler('running.log', maxBytes=500000, backupCount=5)
     logger.addHandler(handler)
 
-    LIST_ALLOW = os.getenv('LIST_ALLOW')
     TOKEN = os.getenv('TOKEN')
+    LIST_ALLOW = os.getenv('LIST_ALLOW')
     LIST_ADMIN = os.getenv('LIST_ADMIN')
+    print(LIST_ALLOW)
+    print(LIST_ADMIN)
     group_id = list(map(int, str(LIST_ALLOW).split(',')))
     list_admin = list(map(int, str(LIST_ADMIN).split(',')))
     main()
