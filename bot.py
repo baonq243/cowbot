@@ -242,8 +242,4 @@ if __name__ == '__main__':
     LIST_ADMIN = os.getenv('LIST_ADMIN')
     group_id = list(map(int, str(LIST_ALLOW).split(',')))
     list_admin = list(map(int, str(LIST_ADMIN).split(',')))
-    print(TOKEN)
-    print(group_id)
-    print(list_admin)
-
     main()
