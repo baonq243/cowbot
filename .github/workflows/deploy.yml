@@ -33,8 +33,9 @@ jobs:
           tags: ghcr.io/baonq243/cowbot:latest
       - name: run docker
         env:
-          CHAT_ID: ${{ secrets.CHAT_ID }}
           TOKEN: ${{ secrets.TOKEN }}
+          LIST_ALLOW: ${{ secrets.LIST_ALLOW }}
+          LIST_ADMIN: ${{ secrets.LIST_ADMIN }}
         run: |
           docker-compose down
           docker-compose rm -f
