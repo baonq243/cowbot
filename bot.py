@@ -14,11 +14,8 @@
 # - Reflector code
 # - Run on docker
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler)
+from telegram.ext import (Updater, CommandHandler)
 import os
-import sys
 import subprocess
 import validators
 import logging
@@ -38,10 +35,12 @@ def bash(string):
 
 
 def start(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     update.message.reply_markdown("\nXin chào {} !\n".format(update.message.from_user.first_name))
 
 
 def help(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     update.message.reply_markdown("```\nMy CowBot\n"
                                   "/ping <ip> or <domain>\n"
                                   "/dns <domain>\n"
@@ -59,9 +58,11 @@ def getid(update, context):
         "\nUser: {} Id: {}\n".format(update.message.from_user.first_name, update.message.from_user.id))
     update.message.reply_markdown(
         "\nId: {}\n".format(update.message.chat_id))
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
 
 
 def command(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id or update.message.from_user.id not in list_admin:
         update.message.reply_markdown("```\nYou don't have permission!\n"
                                       "Liên hệ @baonq !" + '```')
@@ -70,16 +71,16 @@ def command(update, context):
             if context.args:
                 command = " ".join(str(x) for x in context.args)
                 result = bash(command)
-                print(result)
                 update.message.reply_markdown("```\n{}\n".format(result) + '```')
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n```")
 
 
 def traceroute(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -95,16 +96,18 @@ def traceroute(update, context):
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /traceroute <ip> or <domain>" + '```')
 
 
 def checkwan(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     update.message.reply_markdown("```\nĐang dev bạn ôi!\n" + '```')
 
 
 def dns(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -120,12 +123,13 @@ def dns(update, context):
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /dns <domain>" + '```')
 
 
 def checkport(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -143,12 +147,13 @@ def checkport(update, context):
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /checkport <ip> <port>" + '```')
 
 
 def scanport(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -164,12 +169,13 @@ def scanport(update, context):
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /scanport <ip>" + '```')
 
 
 def mtr(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -178,19 +184,20 @@ def mtr(update, context):
                 if len(context.args) != 1:
                     raise Exception()
                 if validators.ipv4(context.args[0]) or validators.domain(context.args[0]):
-                    result = bash('mtr -b -c 10 -r ' + context.args[0])
+                    result = bash('mtr -n -c 10 -r ' + context.args[0])
                     update.message.reply_markdown("```\n{}\n".format(result) + '```')
                 else:
                     raise Exception()
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /mtr <ip> or <domain>" + '```')
 
 
 def ping(update, context):
+    logger.info("From: {} - Arg: {}".format(update.message.from_user.first_name, context.args))
     if update.message.chat_id not in group_id:
         update.message.reply_markdown("```\nYou don't have permission!\n" + '```')
     else:
@@ -206,7 +213,7 @@ def ping(update, context):
             else:
                 raise Exception()
         except Exception as error:
-            print(error)
+            logger.error(error)
             update.message.reply_markdown("```\nLệnh không hợp lệ\n"
                                           "- /ping <ip> or <domain>" + '```')
 
@@ -231,10 +238,12 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename="running.log", level=logging.INFO,
+    log_filename = "/var/log/cowbot/cowbot.log"
+    os.makedirs(os.path.dirname(log_filename), exist_ok=True)
+    logging.basicConfig(level=logging.INFO,
                         format="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s")
-    logger = logging.getLogger('my_bot')
-    handler = RotatingFileHandler('running.log', maxBytes=500000, backupCount=5)
+    logger = logging.getLogger('cowbot')
+    handler = RotatingFileHandler(filename=log_filename, maxBytes=500000, backupCount=5)
     logger.addHandler(handler)
 
     TOKEN = os.getenv('TOKEN')
