@@ -240,10 +240,11 @@ def main():
 if __name__ == '__main__':
     log_filename = "/var/log/cowbot/cowbot.log"
     os.makedirs(os.path.dirname(log_filename), exist_ok=True)
-    logging.basicConfig(level=logging.INFO,
-                        format="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s")
     logger = logging.getLogger('cowbot')
+    logger.setLevel(logging.INFO)
     handler = RotatingFileHandler(filename=log_filename, maxBytes=500000, backupCount=5)
+    formatter = logging.Formatter("[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s")
+    handler.setFormatter(formatter)
     logger.addHandler(handler)
 
     TOKEN = os.getenv('TOKEN')
